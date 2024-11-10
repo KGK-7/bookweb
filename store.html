@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Book Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* General Styles */
+        header, footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        section {
+            display: none;
+            padding: 20px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* Home Page Styles */
+        .about-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .about-section img {
+            width: 300px;
+            height: auto;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Login Page Styles */
+        .form-container {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Catalogue Page Styles */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .book {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .book img {
+            width: 100px;
+            height: auto;
+            margin-right: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Registration Page Styles */
+        .registration-container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .registration-container label, .registration-container input, .registration-container select {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .registration-container input[type="submit"] {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Home Page -->
+    <header>
+        <h1>Welcome to the Online Book Store</h1>
+    </header>
+    
+    <nav>
+        <a href="#home" onclick="showSection('home')">Home</a>
+        <a href="#login" onclick="showSection('login')">Login</a>
+        <a href="#catalogue" onclick="showSection('catalogue')">Catalogue</a>
+        <a href="#register" onclick="showSection('register')">Register</a>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="active">
+        <h2>About Our Store</h2>
+        <div class="about-section">
+            <p>Welcome to our Online Book Store! We offer a wide variety of books across different genres.</p>
+            <img src="D:\html lab 2024\iconic-book-covers-.png" alt="Store Image 1">
+            <img src="D:\html lab 2024\teaspoonearthandsea.jpg" alt="Store Image 2">
+            <img src="D:\html lab 2024\The-Godfather-Book-Cover-399x600.jpg" alt="Store Image 3">
+        </div>
+    </section>
+
+    <!-- Login Page Section -->
+    <section id="login">
+        <h2>Login Page</h2>
+        <div class="form-container">
+            <form action="#">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </section>
+
+    <!-- Catalogue Page Section -->
+    <section id="catalogue">
+        <h2>Book Catalogue</h2>
+        <table>
+            <tr>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Price</th>
+                <th>Image</th>
+            </tr>
+            <tr>
+                <td>The Great Gatsby</td>
+                <td>F. Scott Fitzgerald</td>
+                <td>Classic</td>
+                <td>$10</td>
+                <td class="book"><img src="D:\html lab 2024\The-Godfather-Book-Cover-399x600.jpg" alt="The Great Gatsby"></td>
+            </tr>
+            <tr>
+                <td>To Kill a Mockingbird</td>
+                <td>Harper Lee</td>
+                <td>Classic</td>
+                <td>$12</td>
+                <td class="book"><img src="D:\html lab 2024\iconic-book-covers-.png" alt="To Kill a Mockingbird"></td>
+            </tr>
+            <tr>
+                <td>1984</td>
+                <td>George Orwell</td>
+                <td>Dystopian</td>
+                <td>$15</td>
+                <td class="book"><img src="D:\html lab 2024\teaspoonearthandsea.jpg" alt="1984"></td>
+            </tr>
+            <tr>
+                <td>The Catcher in the Rye</td>
+                <td>J.D. Salinger</td>
+                <td>Classic</td>
+                <td>$8</td>
+                <td class="book"><img src="D:\html lab 2024\image-placeholder-title.jpg" alt="The Catcher in the Rye"></td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Registration Page Section -->
+    <section id="register">
+        <h2>Registration Page</h2>
+        <div class="registration-container">
+            <form action="#">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <input type="submit" value="Register">
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Online Book Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

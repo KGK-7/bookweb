@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books - Online Book Store</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-y: auto; /* Allow vertical scrolling */
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            background-size: 300% 300%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            z-index: 10;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 0;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            z-index: -1;
+            border-radius: 5px;
+            transform: translateX(-50%);
+        }
+
+        .navbar a:hover::before {
+            width: 100%;
+        }
+
+        .navbar a:hover {
+            color: #ff6b81;
+            transform: scale(1.1);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 70px;
+            z-index: 10;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px 0 0 5px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            background-color: #ff6b81;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #ff4d63;
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1; /* This makes the main content area take up the available space */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            z-index: 5;
+        }
+
+        .books-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            width: 80%;
+            z-index: 5; /* Ensure books are above the moving shapes */
+        }
+
+        .book {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .book img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        .book:hover img {
+            transform: scale(1.1);
+        }
+
+        .book h3 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+        }
+
+        .book p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .book span {
+            font-weight: bold;
+            color: #ff6b81;
+        }
+
+        .book:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Moving shapes for background */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.2; /* Adjust opacity to fade into background */
+            z-index: 0; /* Ensure shapes are behind all content */
+            animation: move 20s linear infinite;
+        }
+
+        .shape1 { background-color: #ffcc00; width: 150px; height: 150px; top: 15%; left: 10%; animation-duration: 16s; }
+        .shape2 { background-color: #ff6699; width: 200px; height: 200px; top: 35%; right: 20%; animation-duration: 22s; }
+        .shape3 { background-color: #66b3ff; width: 120px; height: 120px; bottom: 30%; left: 25%; animation-duration: 20s; }
+        .shape4 { background-color: #ff6666; width: 180px; height: 180px; bottom: 10%; right: 10%; animation-duration: 24s; }
+
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(100px, -50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .footer h4 {
+            margin: 10px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #ff6b81;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff4d63;
+        }
+
+        .social-links {
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            font-size: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="./index.html">Home</a>
+        <a href="./books.html">Books</a>
+        <a href="./login.html">Login</a>
+        <a href="./register.html">Register</a>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" placeholder="Search for books...">
+        <button>Search</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Books Container -->
+        <div class="books-container">
+            <!-- Example Book Items -->
+            <div class="book" onclick="viewBookDetails('Book Title 1')">
+                <img src="./cover10.jpg" alt="Book Title">
+                <h3>Book Title 1</h3>
+                <p>Author Name</p>
+                <p><span>$19.99</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 2')">
+                <img src="./cover1.jpg" alt="Book Title">
+                <h3>Book Title 2</h3>
+                <p>Author Name</p>
+                <p><span>$14.99</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 3')">
+                <img src="./cover2.jpg" alt="Book Title">
+                <h3>Book Title 3</h3>
+                <p>Author Name</p>
+                <p><span>$24.99</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 4')">
+                <img src="./cover3.jpg" alt="Book Title">
+                <h3>Book Title 4</h3>
+                <p>Author Name</p>
+                <p><span>$29.99</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 5')">
+                <img src="./cover4.jpg" alt="Book Title">
+                <h3>Book Title 5</h3>
+                <p>Author Name</p>
+                <p><span>$9.99</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 6')">
+                <img src="./cover5.jpg" alt="Book Title">
+                <h3>Book Title 6</h3>
+                <p>Author Name</p>
+                <p><span>$18.99</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 7')">
+                <img src="./cover6.jpg" alt="Book Title">
+                <h3>Book Title 7</h3>
+                <p>Author Name</p>
+                <p><span>$25.99</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 8')">
+                <img src="./cover7.jpg" alt="Book Title">
+                <h3>Book Title 8</h3>
+                <p>Author Name</p>
+                <p><span>$22.50</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 9')">
+                <img src="./cover8.jpg" alt="Book Title">
+                <h3>Book Title 9</h3>
+                <p>Author Name</p>
+                <p><span>$30.00</span></p>
+            </div>
+            <div class="book" onclick="viewBookDetails('Book Title 10')">
+                <img src="./cover9.jpg" alt="Book Title">
+                <h3>Book Title 10</h3>
+                <p>Author Name</p>
+                <p><span>$25.99</span></p>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <h4>About Us</h4>
+            <p>We are an online bookstore dedicated to providing a wide variety of books at affordable prices. Our mission is to connect readers with the books they love.</p>
+            <h4>Contact Us</h4>
+            <p>Email: support@onlinebookstore.com | Phone: (123) 456-7890</p>
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+            <h4>Store Policies</h4>
+            <p>Shipping | Returns | Privacy Policy</p>
+        </footer>
+
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+    </div>
+
+    <script>
+        function viewBookDetails(title) {
+            alert("Viewing details for: " + title);
+            // You can expand this function to show a modal or redirect to a detailed page
+        }
+    </script>
+</body>
+</html>
